@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 with open("requirements.txt", "r") as fh:
 	requirements = fh.read()
 
-setup(
+setuptools.setup(
    name='suffuse_log',
    version=__VERSION__,
    description="""
