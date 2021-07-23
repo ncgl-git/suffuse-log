@@ -1,7 +1,7 @@
 # Import our newly installed setuptools package.
 
 
-__VERSION__ = "0.1dev"
+__VERSION__ = "0.2dev"
 
 import setuptools
 
