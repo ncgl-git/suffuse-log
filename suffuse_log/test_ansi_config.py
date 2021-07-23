@@ -1,6 +1,6 @@
 import unittest
 
-from suffuse_log.suffuse_log import ansi_config
+from . import ansi_config
 
 
 class TestAnsiConfig(unittest.TestCase):

@@ -2,13 +2,13 @@ import logging
 from collections import OrderedDict
 from typing import Dict, Tuple
 
-from suffuse_log.ansi_config import AnsiConfig
+from .ansi_config import AnsiConfig
 
 
 class SuffuseFormatter(logging.Formatter):
     def __init__(
         self,
-        log_ansi_config: OrderedDict[str, AnsiConfig],
+        log_ansi_config: "OrderedDict[str, AnsiConfig]",
         header_delim: str = " | ",
         header_delim_styles: Tuple[str, ...] = ("dim_style",),
         date_format: str = "%Y-%m-%d %H:%M:%S",

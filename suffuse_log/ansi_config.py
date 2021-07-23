@@ -3,7 +3,7 @@ import logging
 import re
 from typing import Callable, Dict, Optional, Tuple, Union
 
-from suffuse_log.suffuse_log.ansi_swatch import ANSI_MAP, STYLE_OFF
+from .ansi_swatch import ANSI_MAP, STYLE_OFF
 
 ANSI_STYLES = Tuple[str, ...]
 MAP_VALUE_COLOR = Union[Dict[str, ANSI_STYLES], Dict[str, Tuple[str]]]
