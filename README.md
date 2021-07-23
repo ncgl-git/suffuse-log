@@ -1,7 +1,7 @@
 
 # suffuse_log
 
-[Screenshot 2021-07-23 113324](https://user-images.githubusercontent.com/84053244/126813501-a5f428b8-cc96-4c75-9d8b-9735f30f583a.png)
+![Screenshot 2021-07-23 113324](https://user-images.githubusercontent.com/84053244/126813501-a5f428b8-cc96-4c75-9d8b-9735f30f583a.png)
 
 ### Overview
 suffuse_log is a python library that specializes in ansi-formatting of log messages. It targets 
