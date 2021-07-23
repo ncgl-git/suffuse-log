@@ -32,7 +32,7 @@ class SuffuseFormatter(logging.Formatter):
         """
         Override the base method to stylize the input values. This is the main entry point into our logic.
 
-        NOTE - The [2:-2] notation reoccuring here is transforming %(attribute)s to attribute.
+        NOTE - The [2:-2] notation recurring here is transforming %(attribute)s to attribute.
 
         Args:
             record (logging.LogRecord): the LogRecord of the log about to be emitted
@@ -60,7 +60,6 @@ class SuffuseFormatter(logging.Formatter):
 def defaultConfig(log_level_no: int = 20):
     bright = "bright_style"
 
-    format_log = "%(asctime)s %(levelname)s %(name) %(message)s"
     format_date = "%Y-%m-%d %H:%M:%S"
 
     format_ansi = OrderedDict()
@@ -91,7 +90,7 @@ def defaultConfig(log_level_no: int = 20):
         case_sensitive_glob=False,
     )
 
-    logging.basicConfig(level=log_level_no, format=format_log)
+    logging.basicConfig(level=log_level_no)
 
     suffuse_formatter = SuffuseFormatter(
         log_ansi_config=format_ansi,
