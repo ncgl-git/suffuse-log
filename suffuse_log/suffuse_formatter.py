@@ -1,8 +1,8 @@
 import logging
 from collections import OrderedDict
-from typing import Tuple, Dict, Union
+from typing import Dict, Tuple
 
-from suffuse_log.ansi_config import AnsiConfig, MAP_VALUE_COLOR, MAP_ATTRIBUTE_COLOR, MAP_CALLABLE_RESULT_COLOR
+from suffuse_log.ansi_config import AnsiConfig
 
 
 class SuffuseFormatter(logging.Formatter):
@@ -54,7 +54,7 @@ class SuffuseFormatter(logging.Formatter):
             if attr_name not in styled_attributes:
                 styled_attributes[attr_name] = AnsiConfig.get_attr(record, attr_name)
 
-        return self._fmt % styled_attributes   # type: ignore
+        return self._fmt % styled_attributes  # type: ignore
 
 
 def defaultConfig(log_level_no: int = 20):
@@ -95,7 +95,6 @@ def defaultConfig(log_level_no: int = 20):
 
     suffuse_formatter = SuffuseFormatter(
         log_ansi_config=format_ansi,
-
         date_format=format_date,
     )
 

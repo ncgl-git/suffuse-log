@@ -1,9 +1,7 @@
 import fnmatch
 import logging
 import re
-from typing import Callable, Dict, List, Tuple, Union, Optional
-
-from colorama.ansi import AnsiCodes
+from typing import Callable, Dict, Optional, Tuple, Union
 
 from suffuse_log.suffuse_log.ansi_swatch import ANSI_MAP, STYLE_OFF
 
@@ -126,10 +124,10 @@ class AnsiConfig:
             attr (str): String name of the attribute to fetch
             styled_attributes (Dict[str, str]): dictionary defined in the formatMessage method of the SuffuseFormatter.
         """
-        target_attributes = self.target_attributes or (attr, )
+        target_attributes = self.target_attributes or (attr,)
         value = self.get_attr(record, attr)
 
-        for k, v in self.match_to_color_map.items():   # type: ignore
+        for k, v in self.match_to_color_map.items():  # type: ignore
             if isinstance(k, str):
                 if self._is_glob_match(pattern=k, value=value):
                     self._modify_target_attributes(record, target_attributes, styled_attributes, v)
@@ -151,7 +149,7 @@ class AnsiConfig:
             attr (str): String name of the attribute to fetch
             styled_attributes (Dict[str, str]): dictionary defined in the formatMessage method of the SuffuseFormatter.
         """
-        target_attributes = self.target_attributes or (attr, )
+        target_attributes = self.target_attributes or (attr,)
         self._modify_target_attributes(record, target_attributes, styled_attributes)
 
     def _is_glob_match(self, pattern: str, value: str) -> bool:
@@ -196,13 +194,9 @@ class AnsiConfig:
                 value = self.get_attr(record, target_attribute)
                 if target_attribute == "levelname" and target_attribute not in styled_attributes:
                     # .rjust(8) is len('critical')
-                    styled_attributes[target_attribute] = self.style(
-                        text=value.rjust(8), styles=styles
-                    )
+                    styled_attributes[target_attribute] = self.style(text=value.rjust(8), styles=styles)
                 else:
-                    styled_attributes[target_attribute] = self.style(
-                        text=value, styles=styles
-                    )
+                    styled_attributes[target_attribute] = self.style(text=value, styles=styles)
 
     def __bool__(self):
         return bool(self.match_to_color_map)
