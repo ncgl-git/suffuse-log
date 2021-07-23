@@ -21,9 +21,7 @@ then this is the library for you.
 ```
 from suffuse_log import suffuse_formatter
 
-logger = suffuse_formatter.defaultConfig(
-    name="my-suffuse-log", log_level_no=10
-)
+logger = suffuse_formatter.defaultConfig(log_level_no=10)
 
 x.info('this is my message')
 ```
@@ -35,3 +33,40 @@ x.info('this is my message')
 - Conditionally color multiple logging attributes based on glob patterns or user-defined callables
 - Defaults to the popular colorama ansi library
 - Allows users to supply their own ansi-style dictionary
+
+### Details
+
+This line in the defaultConfig function:
+```
+    format_ansi["%(levelname)s"] = AnsiConfig(
+        {
+            "DEBUG": ("green_fore", "dim_style"),
+            "INFO": ("blue_fore",),
+            "WARNING": ("yellow_fore",),
+            "ERROR": (bright, "red_fore"),
+            "CRITICAL": (bright, "red_fore"),
+        },
+        ("levelname", "message", "name", "module", "lineno"),
+    )
+```
+tells us how to color the listed attributes when the levelname is one of the dictionary keys.
+
+
+Additionally, this line:
+
+```
+    format_ansi["%(message)s"] = AnsiConfig(
+        {
+            "*error*": (bright,),
+            "*important*": (bright,),
+            "*critical*": (bright,),
+            "*warn*": (bright,),
+            "*alert*": (bright,),
+        },
+        case_sensitive_glob=False,
+    )
+```
+
+says that when the listed glob patterns are matched, then additionally make the message bright.
+
+**Together this functionality gives us some powerful abilities in how we conditionally color and style our messages.**
