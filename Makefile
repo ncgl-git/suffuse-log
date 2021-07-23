@@ -6,4 +6,4 @@ lint:
 
 test:
 	mypy . --ignore-missing-imports
-	pytest tests
+	pytest

@@ -1,6 +1,6 @@
 import unittest
 
-from suffuse_log import ansi_swatch
+from . import ansi_swatch
 
 
 class TestAnsiSwatch(unittest.TestCase):
