@@ -1,0 +1,15 @@
+
+# environments
+.idea
+venv
+.vscode
+
+# python
+**pycache**
+**pytest_cache**
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
