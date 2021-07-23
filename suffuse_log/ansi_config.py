@@ -1,14 +1,14 @@
 import fnmatch
 import logging
 import re
-from typing import Callable, Dict, List, Tuple, Union
+from typing import Callable, Dict, List, Tuple, Union, Optional
 
 from colorama.ansi import AnsiCodes
 
-from suffuse_log.ansi_swatch import ANSI_MAP, STYLE_OFF
+from suffuse_log.suffuse_log.ansi_swatch import ANSI_MAP, STYLE_OFF
 
-ANSI_STYLES = Union[Tuple[str], Tuple[AnsiCodes]]
-MAP_VALUE_COLOR = Dict[str, ANSI_STYLES]
+ANSI_STYLES = Tuple[str, ...]
+MAP_VALUE_COLOR = Union[Dict[str, ANSI_STYLES], Dict[str, Tuple[str]]]
 MAP_ATTRIBUTE_COLOR = ANSI_STYLES
 MAP_CALLABLE_RESULT_COLOR = Dict[Callable, ANSI_STYLES]
 
@@ -34,7 +34,7 @@ class AnsiConfig:
     )
 
     @staticmethod
-    def style(text: str, styles: Tuple[str]) -> str:
+    def style(text: str, styles: Tuple[str, ...]) -> str:
         """
         Where the actual styling takes place. Given a string and a list of ansi_map keys,
         will stylize the input string using the corresponding ansi_map values.
@@ -72,8 +72,8 @@ class AnsiConfig:
 
     def __init__(
         self,
-        match_to_color_map: Union[MAP_VALUE_COLOR, MAP_ATTRIBUTE_COLOR, MAP_CALLABLE_RESULT_COLOR] = {},
-        target_attributes: List[str] = [],
+        match_to_color_map: Optional[Union[MAP_VALUE_COLOR, MAP_ATTRIBUTE_COLOR, MAP_CALLABLE_RESULT_COLOR]] = None,
+        target_attributes: Tuple[str, ...] = tuple(),
         case_sensitive_glob=True,
     ):
 
@@ -82,7 +82,7 @@ class AnsiConfig:
 
         self.case_sensitive_glob = case_sensitive_glob
 
-    def all_attributes(self) -> Tuple[str]:
+    def all_attributes(self) -> Tuple[str, ...]:
         """
         Return the formatter-specific attributes. Is initiatilized as all possible attributes,
         but the SuffuseFormatter overwrites depending on the log_ansi_map it is supplied.
@@ -126,15 +126,15 @@ class AnsiConfig:
             attr (str): String name of the attribute to fetch
             styled_attributes (Dict[str, str]): dictionary defined in the formatMessage method of the SuffuseFormatter.
         """
-        target_attributes = self.target_attributes or [attr]
+        target_attributes = self.target_attributes or (attr, )
         value = self.get_attr(record, attr)
 
-        for k, v in self.match_to_color_map.items():
+        for k, v in self.match_to_color_map.items():   # type: ignore
             if isinstance(k, str):
                 if self._is_glob_match(pattern=k, value=value):
                     self._modify_target_attributes(record, target_attributes, styled_attributes, v)
 
-            elif isinstance(k, callable):
+            elif isinstance(k, callable):  # type: ignore
                 if callable(value):
                     self._modify_target_attributes(record, target_attributes, styled_attributes, v)
             else:
@@ -151,7 +151,7 @@ class AnsiConfig:
             attr (str): String name of the attribute to fetch
             styled_attributes (Dict[str, str]): dictionary defined in the formatMessage method of the SuffuseFormatter.
         """
-        target_attributes = self.target_attributes or [attr]
+        target_attributes = self.target_attributes or (attr, )
         self._modify_target_attributes(record, target_attributes, styled_attributes)
 
     def _is_glob_match(self, pattern: str, value: str) -> bool:
@@ -174,7 +174,7 @@ class AnsiConfig:
     def _modify_target_attributes(
         self,
         record: logging.LogRecord,
-        target_attributes: Tuple[str],
+        target_attributes: Tuple[str, ...],
         styled_attributes: Dict[str, str],
         styles: ANSI_STYLES = tuple(),
     ):
@@ -190,18 +190,18 @@ class AnsiConfig:
             # if we've already seen this value then grab the previously formatted version
             if target_attribute in styled_attributes:
                 styled_attributes[target_attribute] = self.style(
-                    text=styled_attributes[target_attribute], styles=styles or self.match_to_color_map
+                    text=styled_attributes[target_attribute], styles=styles
                 )
             else:
                 value = self.get_attr(record, target_attribute)
                 if target_attribute == "levelname" and target_attribute not in styled_attributes:
                     # .rjust(8) is len('critical')
                     styled_attributes[target_attribute] = self.style(
-                        text=value.rjust(8), styles=styles or self.match_to_color_map
+                        text=value.rjust(8), styles=styles
                     )
                 else:
                     styled_attributes[target_attribute] = self.style(
-                        text=value, styles=styles or self.match_to_color_map
+                        text=value, styles=styles
                     )
 
     def __bool__(self):

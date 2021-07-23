@@ -5,4 +5,5 @@ lint:
 	black -l 120 .
 
 test:
-	pytest
+	mypy . --ignore-missing-imports
+	pytest tests

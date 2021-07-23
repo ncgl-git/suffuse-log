@@ -3,7 +3,7 @@ from types import MappingProxyType
 
 import colorama.ansi as ca
 
-ANSI_MAP = {}
+ANSI_MAP: typing.Dict[str, str] = {}
 STYLE_OFF = "\033[0m"
 
 

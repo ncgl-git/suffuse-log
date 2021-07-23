@@ -1,16 +1,16 @@
 import logging
 from collections import OrderedDict
-from typing import Tuple
+from typing import Tuple, Dict, Union
 
-from suffuse_log.ansi_config import AnsiConfig
+from suffuse_log.ansi_config import AnsiConfig, MAP_VALUE_COLOR, MAP_ATTRIBUTE_COLOR, MAP_CALLABLE_RESULT_COLOR
 
 
 class SuffuseFormatter(logging.Formatter):
     def __init__(
         self,
-        log_ansi_config,
+        log_ansi_config: OrderedDict[str, AnsiConfig],
         header_delim: str = " | ",
-        header_delim_styles: Tuple[str] = ("dim_style",),
+        header_delim_styles: Tuple[str, ...] = ("dim_style",),
         date_format: str = "%Y-%m-%d %H:%M:%S",
     ):
 
@@ -42,7 +42,7 @@ class SuffuseFormatter(logging.Formatter):
         """
 
         # for the attributes in the log_ansi_config, determine how we style the corresponding values
-        styled_attributes = {}
+        styled_attributes: Dict[str, str] = {}
         for attr, ansi_config in self.log_ansi_config.items():
             attr_name = attr[2:-2]
             if ansi_config:
@@ -54,7 +54,7 @@ class SuffuseFormatter(logging.Formatter):
             if attr_name not in styled_attributes:
                 styled_attributes[attr_name] = AnsiConfig.get_attr(record, attr_name)
 
-        return self._fmt % styled_attributes
+        return self._fmt % styled_attributes   # type: ignore
 
 
 def defaultConfig(log_level_no: int = 20):
