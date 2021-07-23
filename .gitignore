@@ -4,6 +4,11 @@
 venv
 .vscode
 
+# twine
+build
+dist
+.egg
+
 # python
 **pycache**
 **pytest_cache**
