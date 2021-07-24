@@ -7,8 +7,6 @@
 suffuse_log is a python library that specializes in ansi-formatting of log messages. It targets 
 local scripts that want to output colored logs to a command line terminal. 
 
-**If you are leveraging logging plugins like Splunk, I don't recommend you use this.**
-
 However, If you have CLI's that you want to make more engaging, pretty, or additionally communicate their meaning with color,
 then this is the library for you. 
 
