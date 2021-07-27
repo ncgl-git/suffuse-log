@@ -12,7 +12,7 @@ MAP_CALLABLE_RESULT_COLOR = Dict[Callable, ANSI_STYLES]
 
 
 class AnsiConfig:
-    formatter_specific_attributes = (
+    formatter_specific_attributes: Tuple[str, ...] = (
         "name",
         "levelno",
         "levelname",
