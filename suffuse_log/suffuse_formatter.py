@@ -25,8 +25,7 @@ class SuffuseFormatter(logging.Formatter):
         super().__init__(fmt=_fmt, datefmt=date_format)
 
         # to optimize run times when given "*", tell AnsiConfig which attributes this formatter expects
-        if not AnsiConfig.formatter_specific_attributes:
-            AnsiConfig.formatter_specific_attributes = tuple(k[2:-2] for k in self.log_ansi_config)
+        AnsiConfig.formatter_specific_attributes = tuple(k[2:-2] for k in self.log_ansi_config)
 
     def formatMessage(self, record: logging.LogRecord) -> str:
         """
