@@ -28,7 +28,7 @@ def load_ansi_map(ansi_map: typing.Dict[str, str] = None):
     """Sets the global ansi map dictionary. Exists to allow a user to supply their own string to ansi code maps.
 
     Args:
-        ansi_mao (typing.Dict[str, str], optional): User-supplied ansi map. Defaults to None.
+        ansi_map (typing.Dict[str, str], optional): User-supplied ansi map. Defaults to None.
     """
     global ANSI_MAP
     ANSI_MAP = ansi_map or default_ansi_swatch()

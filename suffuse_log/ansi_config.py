@@ -82,7 +82,7 @@ class AnsiConfig:
 
     def all_attributes(self) -> Tuple[str, ...]:
         """
-        Return the formatter-specific attributes. Is initiatilized as all possible attributes,
+        Return the formatter-specific attributes. Is initialized as all possible attributes,
         but the SuffuseFormatter overwrites depending on the log_ansi_map it is supplied.
 
         Returns:

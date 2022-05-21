@@ -57,6 +57,7 @@ class SuffuseFormatter(logging.Formatter):
 
 
 def defaultConfig(log_level_no: int = 20):
+    """This function clears the default stream handler to prevent logging twice."""
     bright = "bright_style"
 
     format_date = "%Y-%m-%d %H:%M:%S"
