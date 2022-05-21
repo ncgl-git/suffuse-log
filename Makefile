@@ -5,5 +5,5 @@ lint:
 	black -l 120 .
 
 test:
-	mypy ./suffuse_log --ignore-missing-imports
-	pytest ./suffuse_log
+	mypy suffuse_log --ignore-missing-imports
+	pytest suffuse_log/tests

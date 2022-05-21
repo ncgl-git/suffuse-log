@@ -1,7 +1,7 @@
 # Import our newly installed setuptools package.
 
 
-__VERSION__ = "0.1"
+__VERSION__ = "0.2"
 
 import setuptools
 
